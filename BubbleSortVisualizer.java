@@ -22,6 +22,10 @@ import javafx.scene.layout.BorderStroke;
  */
 public class BubbleSortVisualizer 
 {
+    // =======- Values to change -===========
+    private static final int COLUMN_WITH = 5;
+    private static final int DELAY = 25;
+
 
     private static List<Panel> panelList = new ArrayList<Panel>();
     private static JFrame frame;
@@ -31,7 +35,7 @@ public class BubbleSortVisualizer
 
     public static void main(String[] args) 
     {
-        BuildGui();
+        BuildGui(); 
 
         UpdateVisual();
 
@@ -46,25 +50,27 @@ public class BubbleSortVisualizer
             {
                 if(panelList.get(i).getHeight() > panelList.get(i + 1).getHeight())
                 {
-                    Panel panel = panelList.get(i + 1);
-                    panelList.set(i + 1, panelList.get(i));
-                    panelList.set(i, panel);
+                    Panel panel = new Panel();
+                    panel.setSize(COLUMN_WITH, panelList.get(i + 1).getHeight());
+                    
+                    panelList.get(i + 1).setSize(COLUMN_WITH, panelList.get(i).getHeight());
+                    panelList.get(i).setSize(COLUMN_WITH, panel.getHeight());
 
                     UpdateVisual();
-                    try {
-                        Thread.sleep(30);
-                    } catch (Exception ex) { }
                 }
             }
         }
+        UpdateVisual();
     }
+
+    
 
     private static void BuildGui()
     {
         frame = new JFrame("BubbleSort Visualizer");
-        //frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
+        frame.setLocationRelativeTo(null);
         
 
         mainPanel = new Panel();
@@ -74,28 +80,34 @@ public class BubbleSortVisualizer
 
         GeneratePanelList();
         
+        for (int i = 0; i < panelList.size(); i++) 
+        {
+            mainPanel.add(panelList.get(i));       
+        }    
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
+
         UpdateVisual();         
     }
 
     private static void UpdateVisual()
     {
-        for (Panel panel : panelList)
-        {
-            mainPanel.add(panel);    
-        }    
-
-        frame.add(mainPanel);
         frame.pack();
-        frame.setVisible(true);
+        
+        try
+        {
+            Thread.sleep(DELAY);
+        } catch (Exception ex) { }
     }
 
     private static void GeneratePanelList()
     {
-        for (int i = 0; i < mainPanel.getWidth() / 5; i++) 
+        for (int i = 0; i < mainPanel.getWidth() / COLUMN_WITH; i++) 
         {
             Panel panel = new Panel();
-            panel.setBackground(Color.DARK_GRAY);
-            panel.setSize(5, new Random().nextInt(300));
+            panel.setBackground(Color.LIGHT_GRAY);
+            panel.setSize(COLUMN_WITH, new Random().nextInt(300));
             panel.setLayout(null);
             
             panelList.add(i, panel); 

@@ -1,2 +1,2 @@
 # BubbleSortVisualizer
-Visualiziation of the bubble sort algorithm written in Java
+Quick visualiziation of the bubble sort algorithm written in Java.

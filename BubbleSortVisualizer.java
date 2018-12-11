@@ -1,31 +1,19 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.Panel;
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-
-/**
- * BubbleSortVisualizer
- */
 public class BubbleSortVisualizer 
 {
     // =======- Values to change -===========
     private static final int COLUMN_WITH = 5;
     private static final int DELAY = 30;
-
+    //=======================================
 
     private static List<Panel> panelList = new ArrayList<Panel>();
     private static JFrame frame;
@@ -40,6 +28,51 @@ public class BubbleSortVisualizer
         UpdateVisual();
 
         BubbleSort();
+    }
+   
+    private static void BuildGui()
+    {
+        frame = new JFrame("BubbleSort Visualizer");
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);     
+
+        mainPanel = new Panel();
+        mainPanel.setSize(300, 300);
+        mainPanel.setBackground(Color.GRAY);
+        mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        GeneratePanelList();
+        
+        for (int i = 0; i < panelList.size(); i++) 
+        {
+            mainPanel.add(panelList.get(i));       
+        }    
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
+
+        UpdateVisual();         
+    }
+
+    private static void UpdateVisual()
+    {
+        frame.pack();
+        
+        try { Thread.sleep(DELAY); } catch (Exception ex) { }
+    }
+
+    private static void GeneratePanelList()
+    {
+        for (int i = 0; i < mainPanel.getWidth() / COLUMN_WITH; i++) 
+        {
+            Panel panel = new Panel();
+            panel.setBackground(Color.LIGHT_GRAY);
+            panel.setSize(COLUMN_WITH, new Random().nextInt(300));
+            panel.setLayout(null);
+            
+            panelList.add(i, panel); 
+        }
     }
 
     private static void BubbleSort()
@@ -61,56 +94,5 @@ public class BubbleSortVisualizer
             }
         }
         UpdateVisual();
-    }
-
-    
-
-    private static void BuildGui()
-    {
-        frame = new JFrame("BubbleSort Visualizer");
-        frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        
-
-        mainPanel = new Panel();
-        mainPanel.setSize(300, 300);
-        mainPanel.setBackground(Color.gray);
-        mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        GeneratePanelList();
-        
-        for (int i = 0; i < panelList.size(); i++) 
-        {
-            mainPanel.add(panelList.get(i));       
-        }    
-
-        frame.add(mainPanel);
-        frame.setVisible(true);
-
-        UpdateVisual();         
-    }
-
-    private static void UpdateVisual()
-    {
-        frame.pack();
-        
-        try
-        {
-            Thread.sleep(DELAY);
-        } catch (Exception ex) { }
-    }
-
-    private static void GeneratePanelList()
-    {
-        for (int i = 0; i < mainPanel.getWidth() / COLUMN_WITH; i++) 
-        {
-            Panel panel = new Panel();
-            panel.setBackground(Color.LIGHT_GRAY);
-            panel.setSize(COLUMN_WITH, new Random().nextInt(300));
-            panel.setLayout(null);
-            
-            panelList.add(i, panel); 
-        }
     }
 }

@@ -24,7 +24,7 @@ public class BubbleSortVisualizer
 {
     // =======- Values to change -===========
     private static final int COLUMN_WITH = 5;
-    private static final int DELAY = 25;
+    private static final int DELAY = 30;
 
 
     private static List<Panel> panelList = new ArrayList<Panel>();

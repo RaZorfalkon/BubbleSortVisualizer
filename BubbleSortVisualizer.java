@@ -1,10 +1,8 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Panel;
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,18 +10,16 @@ import javax.swing.JOptionPane;
 public class BubbleSortVisualizer extends JFrame
 {
     // =======- Values to change -===========
-    private final int COLUMN_WITH = 5;
-    private final int DELAY = 30;
+    private final int COLUMN_WITH;
+    private final int DELAY;
     //=======================================
 
     private List<Panel> panelList = new ArrayList<Panel>();
     private Panel mainPanel;
 
-    public BubbleSortVisualizer() { }
-
     public static void main(String[] args) 
     {
-        BubbleSortVisualizer bsv = new BubbleSortVisualizer();
+        BubbleSortVisualizer bsv = parseArgs(args);
 
         bsv.BuildGui(); 
 
@@ -31,7 +27,37 @@ public class BubbleSortVisualizer extends JFrame
 
         bsv.BubbleSort();
     }
+
+    public BubbleSortVisualizer() 
+    {
+        this.COLUMN_WITH = 5;
+        this.DELAY = 30;
+    }
+
+    public BubbleSortVisualizer(int columnWidth, int delay)
+    {
+        this.COLUMN_WITH = columnWidth;
+        this.DELAY = delay;
+    }
    
+    private static BubbleSortVisualizer parseArgs(String[] args)
+    {
+        if(args.length == 0)
+        {
+            return new BubbleSortVisualizer();
+        }
+        else if(args.length == 2)
+        {
+            try
+            {
+                return new BubbleSortVisualizer(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+            } 
+            catch (Exception e) { }
+        }
+
+        throw new RuntimeException("Wrong parametes!");
+    }
+
     public void BuildGui() 
     {
         this.setTitle("BubbleSort Visualizer");
